@@ -1,0 +1,53 @@
+.App{
+   min-height: 100vh;
+  display: flex;
+  /* width: 100%;  */
+  padding: 25px;
+  /* background-image: url('https://picsum.photos/seed/picsum/1848/900');
+  background-size: cover;
+  background-position: center; */
+  background-color: "#90caf9" !important;
+}
+
+.options{
+  overflow: scroll;
+  max-height: 300px;
+  border-radius: 30px;
+}
+
+.options::-webkit-scrollbar {
+  display: none;
+}
+
+.chatBox{
+  height: 85vh;
+  /* border:10px solid #90caf9;
+  border-radius:15px; */
+  position: relative;
+}
+
+.msgInput{
+  position: absolute;
+  /* bottom: 6px; */
+  width: 97%;
+  padding: 10px;
+}
+
+.mychats{
+  overflow: scroll;
+}
+.mychats::-webkit-scrollbar {
+  display: none;
+}
+.messageFeed{
+  display: flex;
+  height:70vh ;
+  flex-direction: column;
+  overflow-y: scroll;
+  /* scrollbar-width: none; */
+}
+
+.messageFeed::-webkit-scrollbar {
+  display: none;
+}
+

@@ -13,7 +13,8 @@ import Lottie from "lottie-react";
 import TypingAnimation from './animation/typing.json';
 //socket.io
 import io from 'socket.io-client';
-const ENDPOINT = "http://localhost:5000";
+ const SOCEKT_ENDPOINT = process.env.REACT_APP_SOCKET_URL;
+
 var socket;
 var selectCompareChat;
 const ChatBox = () => {
@@ -81,7 +82,7 @@ const ChatBox = () => {
       }, [selectedChat]);
 
       useEffect(() => {
-         socket = io(ENDPOINT);
+         socket = io(SOCEKT_ENDPOINT);
          socket.emit('setup',user);
          socket.on('connected',()=>{
             setSocketConnected(true);

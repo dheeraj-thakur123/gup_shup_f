@@ -20,10 +20,10 @@
 }
 
 .chatBox{
-  height: 85vh;
   /* border:10px solid #90caf9;
   border-radius:15px; */
   position: relative;
+  height: 100%;
 }
 
 .msgInput{
@@ -50,4 +50,6 @@
 .messageFeed::-webkit-scrollbar {
   display: none;
 }
-
+.msgInput{
+  bottom: 20px;
+}

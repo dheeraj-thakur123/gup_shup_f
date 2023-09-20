@@ -10,7 +10,7 @@ root.render(
   
     <BrowserRouter>
     <ChatProvider>
-      <ChakraProvider>
+      <ChakraProvider style={{overflow:'hidden'}}>
         <App />
       </ChakraProvider>
     </ChatProvider>

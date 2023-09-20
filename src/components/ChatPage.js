@@ -50,17 +50,17 @@ const Chat = () => {
          </div>
           </div>
         </nav>
-        <div className="row mt-5  w-100 justify-content-center">
+        <div className="row mt-5  w-100 justify-content-center chatboxContainer">
           <div className="col-md-3 border-end border-success d-none d-lg-block ">
             {!!user && <MyChats/>}
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 ">
             {!!selectedChat && <ChatBox/>}
           </div>
         </div>
 
 {/* //Profile Model */}
-      <Modal onClose={onClose} isOpen={isOpen} isCentered closeOnOverlayClick={false}>
+      <Modal onClose={onClose} size={'sm'} isOpen={isOpen} isCentered closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -72,19 +72,22 @@ const Chat = () => {
             src={user && user.pic}
             alt={user && user.name}
               /></Center>:<Center><Avatar
-              size='2xl'
-              mb={'5px'}
+              size='xl'
+              // mb={'5px'}
               name={user && user.name}
             /></Center>}
           <Center><Text fontSize='xl'>{user && user.name}</Text></Center>
           </ModalBody>
-          <ModalFooter>
-          <Center  h='100%' w='100%' color='white'>
-              <Button size='lg' colorScheme='red' mr={3} onClick={logOut}>
+          <div>
+          <Center  h='100%' w='100%'>
+              {/* <Button size='lg' colorScheme='red'  onClick={logOut}>
                 log-out
-              </Button>
+              </Button> */}
+              <div class="d-grid gap-2 col-6 mx-auto mb-3">
+                <button class="btn btn-outline-danger" type="button" onClick={logOut}>log-out</button>
+              </div>
           </Center>
-          </ModalFooter>
+          </div>
         </ModalContent>
       </Modal>
         </>

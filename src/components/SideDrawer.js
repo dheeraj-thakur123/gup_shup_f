@@ -52,9 +52,9 @@ const SideDrawer = () => {
                 }
             };
             const {data} = await axios.post(process.env.REACT_APP_API_BASE_URL+`chat/acessChats`,{userId},config);
-            console.log('nechat',data.finalChat)
+            console.log(data,myChats);
+            debugger
             if(myChats.length>0){
-
                 if (!myChats.find((c) => c._id === data.finalChat._id)) setMyChats([data.finalChat, ...myChats]);
             }else{
                 setMyChats([data.finalChat, ...myChats]);

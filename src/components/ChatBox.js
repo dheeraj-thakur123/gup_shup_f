@@ -13,6 +13,7 @@ import Lottie from "lottie-react";
 import TypingAnimation from './animation/typing.json';
 //socket.io
 import io from 'socket.io-client';
+import InputEmojiWithRef from 'react-input-emoji';
  const SOCEKT_ENDPOINT = process.env.REACT_APP_SOCKET_URL;
 
 var socket;
@@ -35,7 +36,7 @@ const ChatBox = () => {
          return pic[0].pic
     };
     const sendMessage=async(e)=>{
-        e.preventDefault();
+        // e.preventDefault();
         if(sendText){
             socket.emit("stop typing", selectedChat._id);
             try {
@@ -101,7 +102,7 @@ const ChatBox = () => {
         })
       });
       const typingHandler = (e)=>{
-        setSendText(e.target.value);
+        setSendText(e);
         if (!typing) {
             setTyping(true);
             socket.emit("typing", selectedChat._id);
@@ -140,9 +141,16 @@ const ChatBox = () => {
                 <></>
               )}
             <form className=" input-group msgInput" onSubmit={sendMessage}>
-            
-                <input  type="text" className="form-control chatInput" placeholder="type to chat..." aria-label="Recipient's username" aria-describedby="button-addon2" value={sendText} onChange={(e)=>typingHandler(e)}/>
-                <button className=" btn btn-success" type="submit"  id="button-addon2">send</button>
+            <InputEmojiWithRef
+            className="form-control chatInput"
+                 value={sendText}
+                 onChange={(e)=>typingHandler(e)}
+                 onEnter={sendMessage}
+                 cleanOnEnter
+                placeholder="Type a message"
+    />
+                {/* <input  type="text" className="form-control chatInput" placeholder="type to chat..." aria-label="Recipient's username" aria-describedby="button-addon2" value={sendText} onChange={(e)=>typingHandler(e)}/>
+                <button className=" btn btn-success" type="submit"  id="button-addon2">send</button> */}
             </form>
         </div>
         <Modal onClose={onClose} isOpen={isOpen} isCentered closeOnOverlayClick={false}>

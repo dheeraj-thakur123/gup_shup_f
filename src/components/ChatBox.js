@@ -36,7 +36,7 @@ const ChatBox = () => {
          return pic[0].pic
     };
     const sendMessage=async(e)=>{
-        // e.preventDefault();
+         e.preventDefault();
         if(sendText){
             socket.emit("stop typing", selectedChat._id);
             try {
@@ -102,16 +102,17 @@ const ChatBox = () => {
         })
       });
       const typingHandler = (e)=>{
-        setSendText(e);
+        setSendText(e.target.value);
+        if (!socketConnected) return;
         if (!typing) {
             setTyping(true);
             socket.emit("typing", selectedChat._id);
           }
           let lastTypingTime = new Date().getTime();
-          var timerLength = 3000;
+          let timerLength = 2000;
           setTimeout(() => {
-            var timeNow = new Date().getTime();
-            var timeDiff = timeNow - lastTypingTime;
+            let timeNow = new Date().getTime();
+            let timeDiff = timeNow - lastTypingTime;
             if (timeDiff >= timerLength && typing) {
               socket.emit("stop typing", selectedChat._id);
               setTyping(false);
@@ -135,22 +136,23 @@ const ChatBox = () => {
             </div>
             {istyping ? (
                 <div>
-                  <Lottie  style={{ marginBottom: 15, marginLeft: 0,width:'70px' }} animationData={TypingAnimation} loop={true} />
+                  <Lottie  style={{ marginBottom: 50, marginLeft: 0,width:'70px' }} animationData={TypingAnimation} loop={true} />
                 </div>
               ) : (
                 <></>
               )}
             <form className=" input-group msgInput" onSubmit={sendMessage}>
-            <InputEmojiWithRef
+            {/* <InputEmojiWithRef
             className="form-control chatInput"
                  value={sendText}
                  onChange={(e)=>typingHandler(e)}
                  onEnter={sendMessage}
                  cleanOnEnter
                 placeholder="Type a message"
-    />
-                {/* <input  type="text" className="form-control chatInput" placeholder="type to chat..." aria-label="Recipient's username" aria-describedby="button-addon2" value={sendText} onChange={(e)=>typingHandler(e)}/>
-                <button className=" btn btn-success" type="submit"  id="button-addon2">send</button> */}
+                
+             /> */}
+                <input  type="text" className="form-control chatInput" placeholder="type to chat..." aria-label="Recipient's username" aria-describedby="button-addon2" value={sendText} onChange={(e)=>typingHandler(e)}/>
+                <button className=" btn btn-success" type="submit"  id="button-addon2">send</button>
             </form>
         </div>
         <Modal onClose={onClose} isOpen={isOpen} isCentered closeOnOverlayClick={false}>

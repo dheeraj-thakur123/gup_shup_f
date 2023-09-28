@@ -53,3 +53,13 @@
 .msgInput{
   bottom: 20px;
 }
+.selected{
+  background-color: black;
+  color: white;
+}
+.allChats{
+
+  background-color:#90caf9;
+  color:black;
+  
+}

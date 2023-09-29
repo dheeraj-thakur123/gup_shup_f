@@ -5,7 +5,7 @@ import {Avatar,Tooltip} from '@chakra-ui/react';
 const ScrollableText = ({allmessages})=>{
   const {user,token,setMyChats,myChats,selectedChat} = ChatState();
 return(<>
-    <ScrollableFeed>
+    <ScrollableFeed className='mb-2'>
     {allmessages?.map(val=>{
       return (
         <div style={{ display: "flex" }} key={val._id}>
@@ -16,6 +16,7 @@ return(<>
                   mt="7px"
                   mr={1}
                   size="sm"
+                  className='text-capitalize'
                   cursor="pointer"
                   name={val.sender.name}
                   src={val.sender.pic}

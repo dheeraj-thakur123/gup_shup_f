@@ -122,13 +122,13 @@ const ChatBox = () => {
     return (
         <>
         <div className="container chatBox w-100">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary  mt-4 p-2 mb-2">
-                <div class="d-flex align-items-center">
+            <nav className="navbar navbar-expand-lg bg-body-tertiary  mt-4 p-2 mb-2">
+                <div className="d-flex align-items-center">
                     <Avatar name={selectedChat&& getName(selectedChat.users)} src={selectedChat && getPic(selectedChat.users)} className="mr-2" cursor={'pointer'} onClick={onOpen} bg='#90caf9'/>
                     <span className="ms-4 fs-4 text-capitalize text-wrap"> {selectedChat && getName(selectedChat.users)}</span>
                 </div>
                 <span>
-                <i class="bi bi-telephone-fill"></i>
+                {/* <i className="bi bi-telephone-fill"></i> */}
                 </span>
             </nav>
             <div className='messageFeed mb-4'>
@@ -142,15 +142,6 @@ const ChatBox = () => {
                 <></>
               )}
             <form className=" input-group msgInput" onSubmit={sendMessage}>
-            {/* <InputEmojiWithRef
-            className="form-control chatInput"
-                 value={sendText}
-                 onChange={(e)=>typingHandler(e)}
-                 onEnter={sendMessage}
-                 cleanOnEnter
-                placeholder="Type a message"
-                
-             /> */}
                 <input  type="text" className="form-control chatInput" placeholder="type to chat..." aria-label="Recipient's username" aria-describedby="button-addon2" value={sendText} onChange={(e)=>typingHandler(e)}/>
                 <button className=" btn btn-success" type="submit"  id="button-addon2">send</button>
             </form>

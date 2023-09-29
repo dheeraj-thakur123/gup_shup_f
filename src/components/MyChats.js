@@ -45,7 +45,7 @@ const MyChats = () => {
           {myChats&&myChats.length>0&&myChats.map(val=>{
             const isSelected = selectedChat && selectedChat._id === val._id; // Check if the chat is selected
            return (
-            <li class={`list-group-item d-flex w-80 p-2 align-items-center bg-gradient mb-3 ${isSelected ? 'selected' : 'allChats'}`} style={{cursor:'pointer',borderRadius:'30px',height:'60px',wordBreak:'break-word'}} onClick={()=>setSelectedChat(val)} key={val._id}>
+            <li className={`list-group-item d-flex w-80 p-2 align-items-center bg-gradient mb-3 ${isSelected ? 'selected' : 'allChats'}`} style={{cursor:'pointer',borderRadius:'30px',height:'60px',wordBreak:'break-word'}} onClick={()=>setSelectedChat(val)} key={val._id}>
             <Avatar name={getName(user,val.users)} src={getPic(user,val.users)} className="mr-2" />
             <span className="ms-4 fs-4 text-capitalize text-wrap"> {getName(user,val.users)}</span>
          </li>

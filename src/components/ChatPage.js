@@ -38,7 +38,7 @@ const Chat = () => {
           <div className="d-flex justify-content-between w-100  align-items-center">
           {!!user && <SideDrawer/>}
           <span className="navbar-text" style ={{color:"whitesmoke", fontSize:"22px"}}>
-          GUPP <span id="boot-icon" class="bi bi-heart-fill" style={{"font-size": "22px", "color": "rgb(255, 0, 0)"}}></span> SHUPP
+          GUPP <span id="boot-icon" className="bi bi-heart-fill" style={{fontSize: "22px", "color": "rgb(255, 0, 0)"}}></span> SHUPP
           </span>
          <div className="d-flex justify-content-center align-items-center ">
            <i className="bi bi-bell-fill " style={{"fontSize": "2rem", "color": 'cornflowerblue','marginRight':'10px'}}></i>
@@ -83,8 +83,8 @@ const Chat = () => {
               {/* <Button size='lg' colorScheme='red'  onClick={logOut}>
                 log-out
               </Button> */}
-              <div class="d-grid gap-2 col-6 mx-auto mb-3">
-                <button class="btn btn-outline-danger" type="button" onClick={logOut}>log-out</button>
+              <div className="d-grid gap-2 col-6 mx-auto mb-3">
+                <button className="btn btn-outline-danger" type="button" onClick={logOut}>log-out</button>
               </div>
           </Center>
           </div>

@@ -47,7 +47,7 @@ const Home = () => {
             borderWidth={'1px'}
             margin={'80px 0px 0px 0px'}
             >
-                <Text style={{'margin':'0px'}} > GUPP<i class="bi bi-balloon-heart-fill"></i>SHUPP</Text>
+                <Text style={{'margin':'0px'}} > GUPP<i className="bi bi-balloon-heart-fill"></i>SHUPP</Text>
             </Box>
             <Box
             margin={'10px 0px 0px 0px'}

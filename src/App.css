@@ -1,8 +1,8 @@
 .App{
-   min-height: 100vh;
+   height: 100%;
   display: flex;
   /* width: 100%;  */
-  padding: 25px;
+  padding: 8px;
   /* background-image: url('https://picsum.photos/seed/picsum/1848/900');
   background-size: cover;
   background-position: center; */
@@ -51,7 +51,7 @@
   display: none;
 }
 .msgInput{
-  bottom: 20px;
+  bottom: 0px;
 }
 .selected{
   background-color: black;

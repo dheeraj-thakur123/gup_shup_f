@@ -3,7 +3,7 @@ import {Avatar, Modal, ModalOverlay,
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton,Button,useDisclosure,Image,Text,Center} from '@chakra-ui/react';
+    ModalCloseButton,Button,useDisclosure,Image,Text,Center, Spinner} from '@chakra-ui/react';
 import '.././App.css';
 import {ChatState} from '../context/chatProvider';
 import {useEffect, useState} from 'react';
@@ -22,11 +22,13 @@ const ChatBox = () => {
     const [allmessages,setAllMessages] = useState([]);
     const [socketConnected,setSocketConnected] = useState(false);
     const [sendText,setSendText] = useState('');
-    const {user,token,setMyChats,myChats,selectedChat} = ChatState();
+    const {user,token,setMyChats,myChats,selectedChat,setNotification,notification} = ChatState();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [typing, setTyping] = useState(false);
     const [istyping, setIsTyping] = useState(false);
-    
+    const [loading,setLoading] = useState(false);
+    const [videoCall,setVideoCall] = useState(false);
+    const [text,setText] = useState()
     const getName =(chatUser)=>{
         let chatName = chatUser.length>0 && chatUser.filter(val => val.name !=user.name);
         return chatName[0].name;
@@ -64,16 +66,18 @@ const ChatBox = () => {
     };
     const fetchMessages = async()=>{
         try {
+            setLoading(true)
             const config = {
                 headers:{
                     Authorization:`Bearer ${token}`
                 }
             };
             const data  = await axios.get(process.env.REACT_APP_API_BASE_URL+`message/${selectedChat._id}`,config);
-            console.log('data=====',data)
             setAllMessages(data.data.message);
+            setLoading(false)
             socket.emit("join chat",selectedChat._id);
         } catch (error) {
+            setLoading(false)
             console.log(error)
         }
     };
@@ -90,17 +94,53 @@ const ChatBox = () => {
          });
          socket.on("typing", () => setIsTyping(true));
          socket.on("stop typing", () => setIsTyping(false));
+         socket.on('calling',()=>setVideoCall(true));
+         socket.on("stop calling", () => setVideoCall(false));
       }, []);
+
+      const notifyUser = ()=>{
+        const newMessageRecieved = text;
+        if(!selectCompareChat || selectCompareChat._id != newMessageRecieved.chat._id){
+            //browser Notification
+            let permission = Notification.permission;
+            if(permission === "granted") {
+            // showNotification();
+            var notification = new Notification('GUPP-Shupp',{body:`You have recieved message from ${newMessageRecieved.sender.name}`});
+            // new Notification('GUPP SHUPP',`Message recieved from ${newMessageRecieved.sender.name}`)
+            } else {
+                Notification.requestPermission();
+            }
+        }
+      }
       useEffect(()=>{
         socket.on('message recieved',(newMessageRecieved)=>{
+            setNotification([...notification,newMessageRecieved])
+            setText(newMessageRecieved);
+            //notifyUser();
             console.log('neww mee',newMessageRecieved)
             if(!selectCompareChat || selectCompareChat._id != newMessageRecieved.chat._id){
-
             }else{
                 setAllMessages([...allmessages,newMessageRecieved]);
             }
+        });
+        socket.on('calling',(data)=>{
+            console.log('callll ayyiiiii',data);
+            if(data.userId != user._id){
+                alert('video calll aa rhi haiiiii')
+            }else{
+                console.warn('ca;;;;;')
+            }
         })
       });
+
+      const makeVideoCall = () =>{
+        if (!socketConnected) return;
+        const data = {
+            callerId:selectedChat._id,
+            userId:user._id
+        }
+        socket.emit("makeVideoCall", data);
+      }
       const typingHandler = (e)=>{
         setSendText(e.target.value);
         if (!socketConnected) return;
@@ -127,16 +167,17 @@ const ChatBox = () => {
                     <Avatar name={selectedChat&& getName(selectedChat.users)} src={selectedChat && getPic(selectedChat.users)} className="mr-2" cursor={'pointer'} onClick={onOpen} bg='#90caf9'/>
                     <span className="ms-4 fs-4 text-capitalize text-wrap"> {selectedChat && getName(selectedChat.users)}</span>
                 </div>
-                <span>
-                {/* <i className="bi bi-telephone-fill"></i> */}
+                <span onClick={makeVideoCall} style={{cursor:'pointer'}} >
+                <i className="bi bi-telephone-fill"></i>
+                {videoCall?console.log('yesssssssss'):console.log('noooooooooo')}
                 </span>
             </nav>
             <div className='messageFeed mb-4'>
-                <ScrollableText allmessages={allmessages}/>
+               {loading?<Center  h='100px' > <Spinner size='xl' /></Center>:<ScrollableText allmessages={allmessages}/>} 
             </div>
             {istyping ? (
                 <div>
-                  <Lottie  style={{ marginBottom: 50, marginLeft: 0,width:'70px' }} animationData={TypingAnimation} loop={true} />
+                  <Lottie  style={{ marginBottom: 14, marginLeft: 0,width:'70px'}} animationData={TypingAnimation} loop={true} />
                 </div>
               ) : (
                 <></>

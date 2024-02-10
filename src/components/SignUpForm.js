@@ -131,7 +131,7 @@ const SignUp = () => {
       console.log(error.response.data.message);
       setLoading(false);
       toast({
-        title: `Kch to gadbd hai dyaaaaa ${error.response.data.message}`,
+        title: `${error.response.data.message}`,
         status: "error",
         position: "top-right",
         duration: 1000,

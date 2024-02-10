@@ -7,6 +7,8 @@ const [user,setUser] = useState();
 const [token,setToken] = useState('');
 const [selectedChat,setSelectedChat] = useState();
 const [myChats,setMyChats] = useState();
+const [loading,setLoading] = useState(false);
+const [notification,setNotification] = useState([]);
 const history = useHistory();
 
 const allMessages = async()=>{
@@ -42,7 +44,7 @@ useEffect(()=>{
 
 },[history])
     return (
-        <ChatContext.Provider value={{user,setUser,token,setToken,selectedChat,setSelectedChat,myChats,setMyChats}}>
+        <ChatContext.Provider value={{notification,setNotification,loading,user,setLoading,setUser,token,setToken,selectedChat,setSelectedChat,myChats,setMyChats}}>
             {children}
         </ChatContext.Provider>
     )

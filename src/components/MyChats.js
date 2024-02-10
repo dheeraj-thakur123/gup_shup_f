@@ -2,15 +2,17 @@ import '.././App.css';
 import axios from "axios";
 import {ChatState} from "../context/chatProvider";
 import {useEffect, useState} from "react";
-import {Avatar, useToast} from "@chakra-ui/react";
+import {Avatar, Center, Spinner, useToast} from "@chakra-ui/react";
 
 
 const MyChats = () => {
     const {user,token,setMyChats,myChats,selectedChat,setSelectedChat} = ChatState();
     const toast = useToast();
+    const [loading,setLoading] = useState(false);
 
     const myChat = async() =>{
         try {
+            setLoading(true);
             const config = {
                 headers:{
                     'Content-type':"application/json",
@@ -18,8 +20,10 @@ const MyChats = () => {
                 }
             };
             const myChats = await axios.get(process.env.REACT_APP_API_BASE_URL+`chat/getAll`,config);
+            setLoading(false)
             setMyChats(myChats.data.result)
         } catch (error) {
+            setLoading(false);
             toast({
                 title: "no chats ",
                 status: "error",
@@ -42,10 +46,10 @@ const MyChats = () => {
     };
     return (
         <div className=" container col-md-4 mt-4 w-100 p-2 mychats" style={{height:'85vh',}}>
-          {myChats&&myChats.length>0&&myChats.map(val=>{
+          {loading?<Center  h='100px' > <Spinner size='xl' /></Center>:myChats&&myChats.length>0&&myChats.map(val=>{
             const isSelected = selectedChat && selectedChat._id === val._id; // Check if the chat is selected
            return (
-            <li className={`list-group-item d-flex w-80 p-2 align-items-center bg-gradient mb-3 ${isSelected ? 'selected' : 'allChats'}`} style={{cursor:'pointer',borderRadius:'30px',height:'60px',wordBreak:'break-word'}} onClick={()=>setSelectedChat(val)} key={val._id}>
+            <li className={`list-group-item d-flex w-80 p-2 align-items-center bg-gradient mb-3 ${isSelected ? 'selected' : 'allChats'}`} style={{cursor:'pointer',borderRadius:'30px',height:'60px',wordBreak:'break-word'}}  onClick={()=>setSelectedChat(val)} key={val._id}>
             <Avatar name={getName(user,val.users)} src={getPic(user,val.users)} className="mr-2" />
             <span className="ms-4 fs-4 text-capitalize text-wrap"> {getName(user,val.users)}</span>
          </li>

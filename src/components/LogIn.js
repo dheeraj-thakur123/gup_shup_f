@@ -39,7 +39,7 @@ const LoginForm = () => {
       } catch (error) {
         console.log('error',error);
         toast({
-          title: "🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣 bhul gye kaaa...",
+          title: "wrong email/password.",
           status: "error",
           position: "top-right",
           duration: 1000,

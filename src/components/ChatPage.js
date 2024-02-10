@@ -16,13 +16,18 @@ const Chat = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const[open,setOpen]= useState(false);
     useEffect(()=>{
+      Notification.requestPermission().then(function (permission) {
+        console.log(permission);
+    },[]);
+    })
+    useEffect(()=>{
       const data = JSON.parse(localStorage.getItem('userInfo'))
       const user = data && data.user;
       if(!user){
         history.push('/');
       } 
     },[history])
-    const {user,selectedChat,setSelectedChat,setMyChats,setToken,setUser} = ChatState();
+    const {user,selectedChat,setSelectedChat,setMyChats,setToken,setUser,notification,setNotification} = ChatState();
     const logOut = () => {
       setUser({});
       setSelectedChat(null);
@@ -41,7 +46,17 @@ const Chat = () => {
           GUPP <span id="boot-icon" className="bi bi-heart-fill" style={{fontSize: "22px", "color": "rgb(255, 0, 0)"}}></span> SHUPP
           </span>
          <div className="d-flex justify-content-center align-items-center ">
-           <i className="bi bi-bell-fill " style={{"fontSize": "2rem", "color": 'cornflowerblue','marginRight':'10px'}}></i>
+          <div className="dropdown">
+          <i className="bi bi-bell-fill "  style={{"fontSize": "2rem", "color": 'cornflowerblue','marginRight':'10px',cursor:'pointer'}} data-bs-toggle="dropdown">
+            {notification.length>0? <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>:null}
+          </i>
+          <ul class="dropdown-menu">
+            {notification.length>0?notification.map(val=>{
+              return ( <li><a class="dropdown-item">{`You recieved a message from ${val.sender.name}`}</a></li>)
+            }):<li><a class="dropdown-item">No new notification</a></li>}
+          </ul>
+          </div>
+          
             <div className="float-end" >
               <Avatar size={"md"} onClick={onOpen} cursor={'pointer'}  src={user && user.pic} name={user && user.name}>
               <AvatarBadge boxSize='1.25em' bg='green.500' />
